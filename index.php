@@ -6,6 +6,7 @@
     ini_set('display_errors', 'on');
 	mb_internal_encoding('UTF-8');
 
-    include 'code.php';
+    
+	include 'arrs.php';
 ?>
 
