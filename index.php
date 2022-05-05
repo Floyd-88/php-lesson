@@ -7,6 +7,6 @@
 	mb_internal_encoding('UTF-8');
 
     
-	include 'func.php';
+	include 'func_date.php';
 ?>
 
