@@ -7,6 +7,14 @@
 	mb_internal_encoding('UTF-8');
 
     
-	include 'string_html.php';
+	include 'form.php';
 ?>
 
+<!-- На странице index.php сделайте форму. Отправьте ее на страницу result.php. Проверьте оба метода отправки формы. -->
+
+<!-- <form action="/form.php" method="POST">
+<input name="name_user" placeholder="Имя пользователя">
+<input name="age" placeholder="Возраст">
+<input name="salary" placeholder="Зарпата">
+<input type="submit">
+</form> -->
