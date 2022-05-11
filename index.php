@@ -7,6 +7,6 @@
 	mb_internal_encoding('UTF-8');
 
     
-	include 'my_func.php';
+	include 'string_html.php';
 ?>
 
