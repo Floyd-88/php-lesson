@@ -524,36 +524,100 @@ if($_GET["num3"] == $elem) { ?>
     </p>
             <?php } ?>
 
-<br>
-<br>
-<!-- Даны 3 инпута. В них вводятся числа. Проверьте, что эти числа являются тройкой Пифагора: квадрат самого большого числа должен быть равен сумме квадратов двух остальных. -->
-
-
 
 <br>
 <br>
 <!-- Дан инпут и кнопка. В этот инпут вводится дата рождения в формате '01.12.1990'. По нажатию на кнопку выведите на экран сколько дней осталось до дня рождения пользователя. -->
+<form action="" method="GET">
+    <p>Количество дней до дня рождения:</p>
+<input type="date" name="birthday" value=<?php if( !empty($_GET["birthday"])) echo $_GET["birthday"] ?>>
+<input type="submit">
+</form>
+<?php if(!empty($_GET["birthday"])) { ?>
+    <p> <?php 
+           $date_1 = strtotime($_GET[ "birthday"]);
+           $date_2 = time();
+           $result = ceil(($date_1 - $date_2) / (3600 * 24));
+           echo $result;
+        ?> 
 
+    </p>
+            <?php } ?>
 
 
 <br>
 <br>
 <!-- Дан текстареа и кнопка. В текстареа вводится текст. По нажатию на кнопку выведите количество слов и количество символов в тексте. -->
+<form action="" method="GET">
+    <p>Количество слов и символов в тексте:</p>
+    <textarea name="abc" cols="30" rows="10" ><?= $_GET["abc"] ?? '' ?></textarea>
+<input type="submit">
+</form>
+<?php if(!empty($_GET["abc"])) { ?>
+    <p> количество слов:<?php 
+            $str = $_GET["abc"];
+            $arr = explode(" ", $str);
+            echo count($arr);
+        ?> 
 
+    </p>
+    <p> количество символов:<?php 
+            echo mb_strlen($str);
+
+        ?> 
+
+    </p>
+            <?php } ?>
 
 
 <br>
 <br>
 <!-- Дан текстареа и кнопка. В текстареа вводится текст. По нажатию на кнопку нужно посчитать процентное содержание каждого символа в тексте. -->
+<form action="" method="GET">
+    <p>Процентное содержание сиволов в тексте:</p>
+    <textarea name="share_abc" cols="30" rows="10" ><?= $_GET["share_abc"] ?? '' ?></textarea>
+<input type="submit">
+</form>
+<?php if(!empty($_GET["share_abc"])) { ?>
+    <p> <?php 
+        $str = str_replace(" ", "", $_GET["share_abc"]);
+        $num = mb_strlen($str);
+        $arr = array_count_values(str_split($str));
+        foreach($arr as $key => $elem) {
+            echo $key . " - " . round($elem / $num * 100, 2) . " "; 
+        }
+      
+        ?> 
 
+    </p>
+            <?php } ?>
 
 
 <br>
 <br>
 <!-- Даны 3 селекта и кнопка. Первый селект - это дни от 1 до 31, второй селект - это месяцы от января до декабря, а третий - это годы от 1990 до 2025. С помощью этих селектов можно выбрать дату. По нажатию на кнопку выведите на экран день недели, соответствующий этой дате. -->
+<form action="" method="GET">
+    <select name="date_week_1">
+        <?php for($i=1; $i<=31; $i++) {?>
+        <option value="<?php echo $i ?>" <?php if(!empty($_GET["date_week_1"]) and $_GET["date_week_1"] === "$i") echo "selected" ?> > <?php echo $i ?> </option>
+        <?php } ?>
+    </select>
+    <select name="date_week_2">
+    <?php for($i=1; $i<=12; $i++) {?>
+        <option value="<?php echo $i ?>" <?php if(!empty($_GET["date_week_2"]) and $_GET["date_week_2"] === "$i") echo "selected" ?> > <?php echo $i ?> </option>
+        <?php } ?>
+    </select>
+    <select name="date_week_3">
+    <?php for($i=1990; $i<=2025; $i++) {?>
+        <option value="<?php echo $i ?>" <?php if(!empty($_GET["date_week_3"]) and $_GET["date_week_3"] === "$i") echo "selected" ?> > <?php echo $i ?> </option>
+        <?php } ?>
+    </select>
+    <input type="submit">
+</form>
 
-
-
-<br>
-<br>
-<!-- Сделайте скрипт-гороскоп. Внутри него хранится массив гороскопов на несколько дней вперед для каждого знака зодиака. По заходу на страницу спросите у пользователя дату рождения, определите его знак зодиака и выведите предсказание для этого знака зодиака на текущий день. -->
+<?php
+if(!empty($_GET["date_week_1"]) and !empty($_GET["date_week_2"]) and !empty($_GET["date_week_3"]))  {
+$arr = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+echo $arr[date("w", mktime(0, 0, 0, (int) $_GET["date_week_2"], (int) $_GET["date_week_1"], (int) $_GET["date_week_3"]))];
+}
+?>
