@@ -44,3 +44,89 @@ echo file_get_contents('sum.txt');
 $arr = ['text_1' => file_get_contents('text_1.txt'), 'text_2' => file_get_contents('text_2.txt'), 'count' => file_get_contents('count.txt')];
 file_put_contents('new.txt', implode(", ", $arr));
 ?>
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежит файл old.txt. Переименуйте его на new.txt. -->
+<?php
+// rename('old.txt', 'new_old.txt');
+?>
+
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежит файл file.txt. Пусть также в корне вашего сайта лежит папка dir. Переместите файл в эту папку. -->
+<?php
+// rename('new_old.txt', 'dir/new_old.txt');
+?>
+
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежит папка dir, а в ней файл file.txt. Пусть также в корне вашего сайта лежит папка dir2. Переместите файл в эту папку. -->
+<?php
+// rename('dir/new_old.txt', 'dir_2/new_old.txt');
+?>
+
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежит файл. С помощью цикла положите в папку copy пять копий этого файла. Именем файлов копий пусть будут их порядковые номера. -->
+
+<?php
+// for($i=1; $i<=5; $i++) {
+//     copy('dir_2/new_old.txt', "copy/copy_new_old_$i.txt");
+// }
+?>
+
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежат файлы 1.txt, 2.txt и 3.txt. Вручную сделайте массив с именами этих файлов. Переберите его циклом и удалите все эти файлы. -->
+
+<?php
+// $arr = ['1.txt', '2.txt', '3.txt'];
+// foreach($arr as $elem) {
+//     unlink($elem);
+// }
+?>
+
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежит файл. Узнайте его размер, выведите на экран. -->
+<?php
+echo "файл cookie_5.php: " . filesize('cookie_5.php') . " байта";
+?>
+
+
+<br>
+<br>
+<!-- Модифицируйте предыдущую задачу так, чтобы размер файла выводился в килобайтах. -->
+<?php
+echo "файл cookie_5.php: " . filesize('cookie_5.php') / 1024 . " Кбайт";
+?>
+
+
+<br>
+<br>
+<!-- Проверьте, лежит ли в корне вашего сайта файл file.txt. -->
+<?php
+if(file_exists('file.txt')) {
+    echo 'файл file.txt лежит в корневой папке';
+} else echo 'файла file.txt нет в корневой папке';
+?>
+
+
+<br>
+<br>
+<!-- Проверьте, лежит ли в корне вашего сайта файл file.txt. Если нет - создайте его и запишите в него текст '!'. -->
+<?php
+if(file_exists('file.txt')) {
+    $str = file_get_contents('file.txt');
+    echo "файл file.txt c следующим содержимым ( $str ) лежит в корневой папке";
+    
+} else {
+    file_put_contents('file.txt', '!');
+};
+?>
