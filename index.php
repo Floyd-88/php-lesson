@@ -27,9 +27,12 @@
 <input type="submit">
 </form> -->
 
-<a href="session_1.php">session_1</a>
-<a href="session_2.php">session_2</a>
-<a href="logout.php">обнулить все сессии</a>
-	
+<a href="session_1.php">session_1</a> <br>
+<a href="session_2.php">session_2</a> <br>
+<a href="logout.php">обнулить все сессии</a> <br>
+<a href="cookie_1.php">cookie_1</a> <br>
+<a href="cookie_2.php">cookie_2</a> <br>
+<a href="cookie_3.php">cookie_3</a> <br>
+
 </body>
 </html>
