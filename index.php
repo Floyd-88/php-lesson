@@ -1,3 +1,12 @@
+<?php
+if(!isset($_COOKIE['count'])) {
+setcookie('count', 1);
+
+} else {
+    setcookie('count', $_COOKIE['count'] + 1);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +16,7 @@
 	<title>lesson</title>
 </head>
 <body>
+	
 
 <?php
 	error_reporting(E_ALL);
@@ -29,10 +39,14 @@
 
 <a href="session_1.php">session_1</a> <br>
 <a href="session_2.php">session_2</a> <br>
+<a href="session_3.php">session_3</a> <br>
+<a href="session_4.php">session_4</a> <br>
 <a href="logout.php">обнулить все сессии</a> <br>
 <a href="cookie_1.php">cookie_1</a> <br>
 <a href="cookie_2.php">cookie_2</a> <br>
 <a href="cookie_3.php">cookie_3</a> <br>
+<a href="cookie_4.php">cookie_4</a> <br>
+<a href="cookie_5.php">cookie_5</a> <br>
 
 </body>
 </html>
