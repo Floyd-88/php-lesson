@@ -130,3 +130,114 @@ if(file_exists('file.txt')) {
     file_put_contents('file.txt', '!');
 };
 ?>
+
+
+<br>
+<br>
+<!-- Создайте в корне вашего сайта папку с названием dir. -->
+<?php
+// mkdir('dir_3');
+?>
+
+<br>
+<br>
+<!-- Дан массив со строками. Создайте в корне вашего сайта папки, названиями которых служат элементы этого массива -->
+<?php
+// $arr = ["aaa", "bbb", "ccc", "ddd"];
+// foreach($arr as $elem) {
+//     mkdir("dir_3/$elem");
+// }
+?>
+
+<br>
+<br>
+<!-- Создайте в корне вашего сайта папку с названием test. Затем создайте в этой папке три файла: 1.txt, 2.txt, 3.txt. -->
+<?php
+// for($i=1; $i<=3; $i++) {
+//     file_put_contents("dir_3/$i.txt", "");
+// }
+?>
+
+<!-- Удалите папку с названием dir_3 -->
+
+<?php
+// rmdir('dir_3/aaa')
+?>
+
+<!-- Пусть в корне вашего сайта лежит папка dir. Переименуйте ее на test. -->
+<?php
+// rename("dir_3", "dir_4")
+?>
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежит папка dir, а в ней какие-то текстовые файлы. Выведите на экран столбец имен этих файлов. -->
+<?php
+$arr = array_diff(scandir('dir_4'), ['.', '..']);
+foreach($arr as $elem) {
+    echo $elem . "<br>";
+}
+?>
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежит папка dir, а в ней какие-то текстовые файлы. Переберите эти файлы циклом и выведите их тексты в браузер. -->
+<?php
+$arr = array_diff(scandir('dir_4'), ['.', '..']);
+foreach($arr as $elem) {
+   if(strpos($elem, '.txt')) {
+    echo file_get_contents("dir_4/$elem") . "<br>";
+    }
+}
+?>
+
+<br>
+<br>
+<!-- Пусть в корне вашего сайта лежит папка dir, а в ней какие-то текстовые файлы. Переберите эти файлы циклом, откройте каждый из них и запишите в конец восклицательный знак. -->
+<?php
+// $arr = array_diff(scandir('dir_4'), ['.', '..']);
+// foreach($arr as $elem) {
+//    if(strpos($elem, '.txt')) {
+//     echo file_put_contents("dir_4/$elem", file_get_contents("dir_4/$elem"). "!!!") . "<br>";
+//     }
+// }
+?>
+
+
+<br>
+<br>
+<!-- Дана папка. Выведите на экран столбец имен подпапок из этой папки. -->
+<?php
+$patch = "dir_4";
+$arr = array_diff(scandir($patch), [".", ".."]);
+foreach($arr as $elem) {
+    if(is_dir($patch . "/" . $elem)) {
+    echo $elem . "<br>";
+    }
+}
+?>
+
+<br>
+<br>
+<!-- Дана папка. Выведите на экран столбец имен файлов из этой папки. -->
+<?php
+$patch = "dir_4";
+$arr = array_diff(scandir($patch), [".", ".."]);
+foreach($arr as $elem) {
+    if(is_file($patch . "/" . $elem)) {
+    echo $elem . "<br>";
+    }
+}
+?>
+
+<!-- Дана папка. Запишите в конец каждого файла этой папки текущий момент времени. -->
+<?php
+$patch = "dir_4";
+$arr = array_diff(scandir($patch), [".", ".."]);
+foreach($arr as $elem) {
+    $patch_2 = $patch . "/" . $elem;
+    if(is_file($patch_2)) {
+    file_put_contents($patch_2, file_get_contents($patch_2) . " " . date("H:m:s"));
+    }
+}
+?>
