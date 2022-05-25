@@ -187,3 +187,72 @@ echo '<pre>';
 print_r($new_arr2);
 echo '</pre>';
 ?>
+
+<!-- Сайт с датами футбольных игр. Каждая игра содержит дату игры, первую команду и вторую команду. Есть игроки, каждый из которых принадлежит одной команде. Составьте структуру таблиц. -->
+<?php
+$football = mysqli_connect('localhost', 'mysql', 'mysql', 'football_game');
+
+// создает таблицы в базе данных:
+$playrs = 'CREATE TABLE playrs (id_playrs INT PRIMARY KEY AUTO_INCREMENT, name_playrs VARCHAR(30))';
+// $arr_playrs = mysqli_query($football, $playrs) or die(mysqli_error($playrs));
+
+$teems = 'CREATE TABLE teems (id_teems INT PRIMARY KEY AUTO_INCREMENT, teem VARCHAR(30))';
+// $arr_teems = mysqli_query($football, $teems) or die(mysqli_error($teems));
+
+$count_teems = 'CREATE TABLE count_teems (id INT PRIMARY KEY AUTO_INCREMENT, name_teems INT, id_playrs INT, FOREIGN KEY (id_playrs) REFERENCES playrs (id_playrs), FOREIGN KEY (name_teems) REFERENCES teems (id_teems))';
+// $teems_count = mysqli_query($football, $count_teems) or die(mysqli_error($count_teems));
+
+$games = 'CREATE TABLE games (id_games INT PRIMARY KEY AUTO_INCREMENT, date_games DATE,  teems_1 INT, teems_2 INT, FOREIGN KEY (teems_1) REFERENCES teems (id_teems), FOREIGN KEY (teems_2) REFERENCES teems (id_teems))';
+// $arr_games = mysqli_query($football, $games) or die(mysqli_error($games));
+
+// заполняем таблицы информацией:
+$arr_names = ['Сидоров', 'Васин', 'Смолов', 'Глушаков', 'Фернандес', 'Алехин', 'Яшин', 'Акинфеев', 'Романов', 'Филимонов', 'Цимбаларь', 'Анопко'];
+// foreach($arr_names as $elem) {
+//     $sql = "INSERT INTO playrs (name_playrs) VALUES ('$elem')";
+//     mysqli_query($football, $sql) or die(mysqli_error($sql));  
+// }
+
+$arr_teems = ['Спартак', 'Зенит', 'ЦСКА', 'Динамо'];
+// foreach($arr_teems as $elem) {
+//     $sql = "INSERT INTO teems (teem) VALUES ('$elem')";
+//     mysqli_query($football, $sql) or die(mysqli_error($sql));  
+// }
+
+$arr_count = [['1', '1'], ['1', '2'], ['1', '5'], ['2', '9'], ['2', '7'], ['2', '4'], ['3', '3'], ['3', '6'], ['3', '8'], ['4', '10'], ['4', '11'], ['4', '12']];
+// foreach($arr_count as $elem) {
+//     $sql_teem = "INSERT INTO count_teems (name_teems, id_playrs) VALUES ('$elem[0]', '$elem[1]')";
+//     mysqli_query($football, $sql_teem) or die(mysqli_error($sql_teem));  
+// }
+
+$arr_games = [['2022-06-10', '1', '2'], ['2022-07-20', '3', '4'], ['2022-08-5', '4', '1'], ['2022-09-01', '3', '2']];
+
+// foreach($arr_games as $elem) {
+//     $sql_games = "INSERT INTO games (date_games, teems_1, teems_2) VALUES ('$elem[0]', '$elem[1]', '$elem[2]')";
+//     mysqli_query($football, $sql_games) or die(mysqli_error($sql_games));  
+// }
+
+// вывод даты и команд:
+$show_football = 'SELECT date_games as "дата игры", (SELECT teem FROM teems WHERE id_teems = teems_1) as "команда_1", (SELECT teem FROM teems WHERE id_teems = teems_2) as "команда_2" FROM games
+LEFT JOIN teems ON games.teems_1 = teems.id_teems';
+
+$result = mysqli_query($football, $show_football);
+for($arr=[]; $row = mysqli_fetch_assoc($result); $arr[] = $row);
+echo '<pre>';
+print_r($arr);
+echo '</pre>';
+
+// вывод команд и игроков:
+$show_playrs = 'SELECT teem as "команда", name_playrs as "игроки" FROM teems
+LEFT JOIN count_teems ON id_teems = name_teems
+LEFT JOIN playrs USING(id_playrs)';
+
+$result = mysqli_query($football, $show_playrs);
+for($arr=[]; $row = mysqli_fetch_assoc($result); $arr[] = $row);
+$new_arr = [];
+foreach($arr as $elem) {
+    $new_arr[$elem['команда']][] = $elem['игроки'];
+}
+echo '<pre>';
+print_r($new_arr);
+echo '</pre>';
+?>
