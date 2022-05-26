@@ -1,3 +1,5 @@
+
+
 <!-- Пусть вам нужно хранить товары (название, цена, количество) и категории этих товаров. Распишите структуру хранения. -->
 <?php
 $db = mysqli_connect('localhost', 'mysql', 'mysql', 'mydb');
@@ -255,4 +257,215 @@ foreach($arr as $elem) {
 echo '<pre>';
 print_r($new_arr);
 echo '</pre>';
+?>
+
+
+<br>
+<br>
+<!-- Выведите записи нашей таблицы в следующем виде:
+<div>
+	<h2>user1</h2>
+	<p>
+		23 years, <b>400$</b>
+	</p>
+</div>
+<div>
+	<h2>user2</h2>
+	<p>
+		24 years, <b>500$</b>
+	</p>
+</div>
+<div>
+	<h2>user3</h2>
+	<p>
+		25 years, <b>600$</b>
+	</p>
+</div> -->
+<?php
+$test = mysqli_connect('localhost', 'mysql', 'mysql', 'test');
+$users = 'SELECT * FROM users';
+$show_users = mysqli_query($test, $users) or die(mysqli_error($users));
+for($arr=[]; $row = mysqli_fetch_assoc($show_users); $arr[] = $row);
+foreach($arr as $elem) {?>
+<div>
+<h2><?php echo $elem['name'] ?></h2>
+<p><?php echo $elem['age'] . ' years' . ', '?> <b> <?php echo $elem['salary'] ?></b> </p>
+</div>
+<?php } ?>
+
+
+<br>
+<br>
+<!-- Выведите записи нашей таблицы в следующем виде:
+<table>
+	<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>age</th>
+		<th>salary</th>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>user1</td>
+		<td>23</td>
+		<td>400</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>user2</td>
+		<td>25</td>
+		<td>500</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>user3</td>
+		<td>23</td>
+		<td>500</td>
+	</tr>
+</table> -->
+<?php
+foreach($arr as $elem) {?>
+<table border=1>
+	<tr>
+		<th> <?php echo $elem['id'] ?> </th>
+		<th> <?php echo $elem['name'] ?> </th>
+		<th> <?php echo $elem['age'] ?> </th>
+		<th> <?php echo $elem['salary'] ?> </th>
+	</tr>
+	<tr>
+</table> 
+<?php } ?>
+
+
+<br>
+<br>
+<!-- Выведите записи нашей таблицы в следующем виде:
+<ul>
+	<li>user1</li>
+	<li>user2</li>
+	<li>user3</li>
+</ul> -->
+
+<?php
+foreach($arr as $elem) {?>
+<ul>
+	<li><?php echo $elem['name'] ?></li>
+</ul> 
+<?php } ?>
+
+
+<br>
+<br>
+<!-- Сделайте так, чтобы в адресной строке можно было отправить GET запрос с id юзера и этот юзер удалялся из БД. -->
+<?php
+foreach($arr as $elem) {?>
+<ul>
+	<li><?=$elem['name']?> <a href="?del=<?= $elem['id'] ?>"> удалить </a></li>
+</ul>
+<?php } ?>
+
+<?php
+// $num = $_GET['del'];
+// $delet = "DELETE FROM users WHERE id=$num";
+// mysqli_query($test, $delet);
+?>
+
+
+<br>
+<br>
+<!-- Модифицируйте предыдущую задачу так, чтобы у вас был следующий HTML код:
+<table>
+	<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>age</th>
+		<th>salary</th>
+		<th>delete</th>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>user1</td>
+		<td>23</td>
+		<td>400</td>
+		<td><a href="?del=1">удалить</a></td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>user2</td>
+		<td>25</td>
+		<td>500</td>
+		<td><a href="?del=2">удалить</a></td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>user3</td>
+		<td>23</td>
+		<td>500</td>
+		<td><a href="?del=3">удалить</a></td>
+	</tr>
+</table> -->
+<table border=1>
+<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>age</th>
+		<th>salary</th>
+		<th>delete</th>
+	</tr>
+<?php foreach($arr as $elem) {?>
+	<tr>
+		<td> <?php echo $elem['id'] ?> </td>
+		<td> <?php echo $elem['name'] ?> </td>
+		<td> <?php echo $elem['age'] ?> </td>
+		<td> <?php echo $elem['salary'] ?> </td>
+        <td> <a href="?del=<?= $elem['id'] ?>">удалить</a></td>
+	</tr>
+    <?php } ?>
+</table> 
+
+<?php
+$num = $_GET['del'];
+mysqli_query($test, "DELETE FROM users WHERE id=$num");
+?>
+
+<br>
+<br>
+<!-- На странице index.php реализуйте вывод ссылок на просмотр каждого из юзеров: -->
+
+<?php foreach($arr as $elem) {?>
+    <a href="show.php?id=<?= $elem['id'] ?>"><?php echo $elem['name'] ?></a> <br>
+<?php } ?>
+
+<br>
+<br>    
+<!-- На странице new.php реализуйте форму для добавления нового юзера. -->
+<form action="" method="POST">
+<p>Добавить нового пользователя:</p>
+<input placeholder="введите имя" type="text" name="name" value=<?php if(!empty($_POST['name'])) echo $_POST['name'] ?>><br>
+<input placeholder="введите возраст" type="text" name="age" value=<?php if(!empty($_POST['age'])) echo $_POST['age'] ?>><br>
+<input placeholder="введите зарплату" type="text" name="salary" value=<?php if(!empty($_POST['salary'])) echo $_POST['salary'] ?>><br>
+<input type="submit"><br>
+</form>
+
+<?php
+if(!empty($_POST)) {
+$name = $_POST['name'];
+$age = $_POST['age'];
+$salary = $_POST['salary'];
+}
+$add = "INSERT INTO users (name, age, salary) VALUES ('$name', '$age', '$salary')";
+mysqli_query($test, $add);
+
+?>
+
+
+<!-- Реализуйте страницу edit.php для редактирования юзера. -->
+<br>
+<br>
+<?php foreach($arr as $elem) { ?>
+<a href="edit.php?id=<?= $elem['id'] ?>"> <?php echo $elem['name'] ?></a> <br>
+<?php } ?>
+
+<?php
+	header('Location: edit.php');
 ?>
