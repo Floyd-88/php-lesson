@@ -1,10 +1,14 @@
 <?php
-if(!isset($_COOKIE['count'])) {
-setcookie('count', 1);
+session_start();
+?>
 
-} else {
-    setcookie('count', $_COOKIE['count'] + 1);
-}
+<?php
+// if(!isset($_COOKIE['count'])) {
+// setcookie('count', 1);
+
+// } else {
+//     setcookie('count', $_COOKIE['count'] + 1);
+// }
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +51,15 @@ setcookie('count', 1);
 <a href="cookie_3.php">cookie_3</a> <br>
 <a href="cookie_4.php">cookie_4</a> <br>
 <a href="cookie_5.php">cookie_5</a> <br>
+
+<?php
+if(!empty($_SESSION['flash'])) {
+	foreach($_SESSION['flash'] as $elem) {
+		echo $elem;
+	}
+	$_SESSION['flash'] = [];
+}
+?>
 
 </body>
 </html>
