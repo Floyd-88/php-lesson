@@ -4,24 +4,25 @@
         if($_POST['password1'] === $_POST['password2']) {
             $connect =  mysqli_connect('localhost', 'mysql', 'mysql', 'registr');
             $login = $_POST['login'];
-            $pass = $_POST['password1'];
+            $pass = password_hash($_POST['password1'], PASSWORD_DEFAULT);
             $date = $_POST['date'];
             $email = $_POST['email'];
             $country = $_POST['country'];
 
             $double_check = "SELECT login FROM login WHERE login = '$login'";
-            $user_double_check = mysqli_query($connect, $double_check);
+            $user_double_check = mysqli_query($connect, $double_check) or die(mysqli_error($double_check));
 
             if(empty(mysqli_fetch_assoc($user_double_check))) {
 
                 if(preg_match("/^[a-z0-9-_]{4,10}$/i", $login)) {
-                    if(mb_strlen($pass) >= 6 and mb_strlen($pass) <= 12) {
+                    if(mb_strlen($pass) >= 6) {
                         if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $add_new_user = "INSERT INTO login(login, pasword, date, email, country) VALUE ('$login', '$pass', '$date', '$email', '$country')";
-            mysqli_query($connect, $add_new_user);
+
+            $add_new_user = "INSERT INTO login(login, pasword, date, email, country) VALUES ('$login', '$pass', '$date', '$email', '$country')";
+            mysqli_query($connect, $add_new_user) or die(mysqli_error($add_new_user));
+
             $id = mysqli_insert_id($connect);
             $_SESSION['id'] = $id;
-
             $_SESSION['login'] = $login;
             $_SESSION['success'] = "Добро пожаловть";
             $_SESSION['auth'] = true;
@@ -62,6 +63,9 @@
 <body>
 
 <!-- Зарегистрируйте нового пользователя и авторизуйтесь под ним. Убедитесь, что все работает, как надо -->
+
+<!-- Внесите изменения в регистрацию с учетом хеширования, зарегистрируйте пару новых пользователей, убедитесь, что в базу данных они добавились с хешированными паролями. -->
+
     <form action="" method="POST">
         <h3>Пройдите регистрацию:</h3>
         <?php echo $all_input ?>
