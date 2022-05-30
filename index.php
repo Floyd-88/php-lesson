@@ -40,25 +40,32 @@ session_start();
 <input name="salary" placeholder="Зарпата">
 <input type="submit">
 </form> -->
+<?php if(!empty($_SESSION['login'])) {
+	echo "Привет, " . $_SESSION['login'] . "<br>"; ?>
+	<a href="logout.php">Выйти из своего профиля</a> <br> <br>
+<?php } else { ?>
+	<a href="login.php">Вам необходимо авторизоваться</a> <br>
+	<a href="register.php">или пройти регистрацию!!!</a> <br>
+<?php } ?>
 
 <a href="session_1.php">session_1</a> <br>
 <a href="session_2.php">session_2</a> <br>
 <a href="session_3.php">session_3</a> <br>
 <a href="session_4.php">session_4</a> <br>
-<a href="logout.php">обнулить все сессии</a> <br>
 <a href="cookie_1.php">cookie_1</a> <br>
 <a href="cookie_2.php">cookie_2</a> <br>
 <a href="cookie_3.php">cookie_3</a> <br>
 <a href="cookie_4.php">cookie_4</a> <br>
 <a href="cookie_5.php">cookie_5</a> <br>
-
+<?php if(!empty($_SESSION['auth'])) { ?> 
+<a href="logout.php">обнулить все сессии</a> <br>
+<?php } ?>
 <?php
-if(!empty($_SESSION['flash'])) {
-	foreach($_SESSION['flash'] as $elem) {
-		echo $elem;
+if(isset($_SESSION['success'])) {
+	echo $_SESSION['success'];
 	}
-	$_SESSION['flash'] = [];
-}
+	$_SESSION['success'] = '';
+	
 ?>
 
 </body>

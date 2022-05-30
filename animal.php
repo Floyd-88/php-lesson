@@ -78,12 +78,21 @@ if(!empty($_POST)) {
             $email = test_form($_POST['email']);
             
             $animal = mysqli_connect('localhost', 'mysql', 'mysql', 'animals');
-            $pet_add = "INSERT INTO pet(name, type_animal, email) VALUES ('$name', '$type_animal', '$email')";
-            mysqli_query($animal, $pet_add) or die(mysqli_error($pet_add));
-            header('Location: animal.php');
-            $_SESSION['flash'] = 'Форма отправлена на сервер!!!';
-            // $_SESSION['name'] = $name;
+
+            $repeat_info = "SELECT * FROM pet WHERE name='$name' AND type_animal='$type_animal' AND email='$email'";
+            $result_repeat_info = mysqli_query($animal, $repeat_info) or die(mysqli_error($repeat_info));
+            $row_repeat_info = mysqli_fetch_assoc($result_repeat_info);
+
+            if(empty($row_repeat_info)) {
+                $pet_add = "INSERT INTO pet(name, type_animal, email) VALUES ('$name', '$type_animal', '$email')";
+                mysqli_query($animal, $pet_add) or die(mysqli_error($pet_add));
+    
+                header('Location: animal.php');
+                $_SESSION['flash'] = 'Форма отправлена на сервер!!!';
+                }
+                echo "Данные были отправлены ранее";
             }
+            
 }
 
     //Вывод сообщения об отправке
