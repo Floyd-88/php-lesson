@@ -12,6 +12,8 @@ session_start();
             $pass = $_POST['pass'];
                 if(password_verify($pass, $user['pasword'])) {
             header('Location: index.php');
+            
+            $_SESSION['id'] = $user['id'];
             $_SESSION['login'] = $user['login'];
             $_SESSION['success'] = "Добро пожаловть";
             $_SESSION['auth'] = true;

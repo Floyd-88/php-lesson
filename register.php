@@ -1,6 +1,6 @@
 <?php session_start(); ?>
 <?php 
-    if(!empty($_POST['login']) and !empty($_POST['password1']) and !empty($_POST['password2']) and !empty($_POST['date']) and !empty($_POST['email']) and !empty($_POST['country'])) {
+    if(!empty($_POST['login']) and !empty($_POST['password1']) and !empty($_POST['password2']) and !empty($_POST['date']) and !empty($_POST['email']) and !empty($_POST['name']) and !empty($_POST['country'])) {
         if($_POST['password1'] === $_POST['password2']) {
             $connect =  mysqli_connect('localhost', 'mysql', 'mysql', 'registr');
             $login = $_POST['login'];
@@ -8,6 +8,9 @@
             $date = $_POST['date'];
             $email = $_POST['email'];
             $country = $_POST['country'];
+            $name = $_POST['name'];
+            $lastname = $_POST['lastname'];
+            $famaly = $_POST['famaly'];
 
             $double_check = "SELECT login FROM login WHERE login = '$login'";
             $user_double_check = mysqli_query($connect, $double_check) or die(mysqli_error($double_check));
@@ -18,7 +21,7 @@
                     if(mb_strlen($pass) >= 6) {
                         if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-            $add_new_user = "INSERT INTO login(login, pasword, date, email, country) VALUES ('$login', '$pass', '$date', '$email', '$country')";
+            $add_new_user = "INSERT INTO login(login, pasword, date, email, country, name, last_name, famaly) VALUES ('$login', '$pass', '$date', '$email', '$country', '$name', '$lastname', '$famaly')";
             mysqli_query($connect, $add_new_user) or die(mysqli_error($add_new_user));
 
             $id = mysqli_insert_id($connect);
@@ -79,12 +82,19 @@
 
         <input type="email" name="email" placeholder="введите свой email" value=<?php if(!empty($_POST['email'])) echo $_POST['email'] ?>> <?php echo $email_uncorrect ?> <br>
 
+        <input type="text" name="name" placeholder="введите свое имя" value=<?php if(!empty($_POST['name'])) echo $_POST['name'] ?>> <br>
+
+        <input type="text" name="lastname" placeholder="введите свое отчество" value=<?php if(!empty($_POST['lastname'])) echo $_POST['lastname'] ?>> <br>
+
+        <input type="text" name="famaly" placeholder="введите свою фамилию" value=<?php if(!empty($_POST['famaly'])) echo $_POST['famaly'] ?>> <br>
+
         <span>Выберите страну проживания:</span>
         <select name="country">
             <option value="Russia" <?php if($_POST['country'] == "Russia") echo selected ?> >Россия</option>
             <option value="USA" <?php if($_POST['country'] == "USA") echo selected ?> >США</option>
             <option value="Germany" <?php if($_POST['country'] == "Germany") echo selected ?> >Германия</option>
         </select> <br>
+
 
         <input type="submit">
     </form>

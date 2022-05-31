@@ -67,6 +67,7 @@ if(isset($_SESSION['success'])) {
 	$_SESSION['success'] = '';
 	
 ?>
-
+	<a href="profile.php">Профиль пользователя</a> <br>
+	<a href="user.php">Все пользователи</a>
 </body>
 </html>
