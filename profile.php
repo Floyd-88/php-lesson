@@ -41,7 +41,8 @@ $person = mysqli_fetch_assoc($result);
     if( $_SESSION['auth'] == true) { ?>
     
         <a href="account.php">Редактировать профиль</a> <br>
-        <a href="changePassword.php">Сменить пароль</a>
+        <a href="changePassword.php">Сменить пароль</a> <br>
+        <a href="delete_user.php">Удалить профиль</a>
     <?php } ?>
     
     
