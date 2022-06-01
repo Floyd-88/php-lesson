@@ -2,10 +2,10 @@
 session_start();
 $id = $_SESSION['id'];
 $connect =  mysqli_connect('localhost', 'mysql', 'mysql', 'registr');
-$admin = "SELECT status FROM login WHERE id='$id'";
+$admin = "SELECT id_status FROM login WHERE id='$id'";
 $result_admin = mysqli_query($connect, $admin) or die(mysqli_error($admin));
 $user_admin = mysqli_fetch_assoc($result_admin);
-if($user_admin['status'] === 'admin') { 
+if($user_admin['id_status'] === '2') { 
     $_SESSION['admin'] = true;
     ?>
 
@@ -23,7 +23,7 @@ include 'header.php';
 ?>
 
 <?php 
-$all_users = "SELECT * FROM login";
+$all_users = "SELECT * FROM login LEFT JOIN statuses ON login.id_status = statuses.id_status";
 $result_users = mysqli_query($connect, $all_users) or die(mysqli_error($all_users));
 $arr = [];
 for($arr = []; $users = mysqli_fetch_assoc($result_users); $arr[] = $users);?>
@@ -35,26 +35,31 @@ for($arr = []; $users = mysqli_fetch_assoc($result_users); $arr[] = $users);?>
         <th>Удалить пользователя</th>
         <th>Изменить статус</th></th>
     </tr>
-
     <?php foreach($arr as $elem) { ?>
 
     <tr 
     <?php 
-       if($elem['status'] === 'admin'){
+       if($elem['id_status'] === '2'){
            echo "bgcolor=\"red\"";
        } echo "bgcolor=\"green\"";
     ?>>
         <td><?php echo $elem['login'] ?></td>
-        <td> <?php echo $elem['status'] ?></td>
+
+        <td> <?php echo $elem['name_status'] ?></td>
+
         <td> <a href="del_admin.php?id=<?php echo $elem['id'] ?>">Удалить</a></td>
-        <td> <a href="change_status.php?id=<?php echo $elem['id'] ?>&status=<?php echo $elem['status'] ?>">Сделать <?php
-            if($elem['status'] === 'user') {
+
+        <td> 
+            <a href="change_status.php?id=<?php echo $elem['id']?>&status=<?php echo $elem['id_status'] ?>">Сделать 
+            <?php
+            if($elem['id_status'] === '1') {
                 echo "админом";
             } else {
                 echo "юзером";
             }
-        ?>
-        </a></td>
+            ?>
+            </a>
+        </td>
     </tr>
 
     <?php 

@@ -66,6 +66,5 @@ if(isset($_SESSION['success'])) { ?>
 	}
 	$_SESSION['success'] = '';
 ?>
-
 </body>
 </html>

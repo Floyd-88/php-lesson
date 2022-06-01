@@ -4,7 +4,7 @@ session_start();
         $login = $_POST['login'];
         // $pass = md5($_POST['pass']);
         $connect =  mysqli_connect('localhost', 'mysql', 'mysql', 'registr');
-        $reg = "SELECT * FROM login WHERE login='$login'";
+        $reg = "SELECT * FROM login LEFT JOIN statuses ON login.id_status = statuses.id_status WHERE login='$login'";
         $result = mysqli_query($connect, $reg) or die(mysqli_error($reg));
         $user = mysqli_fetch_assoc($result);
         
@@ -17,7 +17,7 @@ session_start();
             $_SESSION['login'] = $user['login'];
             $_SESSION['success'] = "Добро пожаловать!";
             $_SESSION['auth'] = true;
-            $_SESSION['status'] =  $user['status'];
+            $_SESSION['status'] = $user['name_status'];
                 } else {
                 echo "Введенный логин или пароль не верны!";
                 session_destroy();

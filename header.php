@@ -39,7 +39,7 @@
 		<?php echo "Пользователь: " . $_SESSION['login']; ?>
 		</p>
 		<p class="nav_menu_hello">
-		<?php echo "Статус: " . $_SESSION['status']; ?>
+		<?php echo "Статус: " . $status = (!empty($_SESSION['status'])) ? $_SESSION['status']: 'user'; ?>
 		</p>
 	</div>
 	<!-- <a href="logout.php">Выйти из своего профиля</a> <br> <br> -->
@@ -53,7 +53,8 @@
 		</li>
 
         <li>
-		<?php if($_SESSION['status'] === 'admin') { ?>
+		<?php 
+        if($_SESSION['status'] === 'admin') { ?>
             <a href="admin.php">Перейти на панель администратора</a> <br>
 <?php }  ?>
 		</li>

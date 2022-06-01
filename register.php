@@ -1,6 +1,7 @@
 <?php session_start(); ?>
 <?php 
     if(!empty($_POST['login']) and !empty($_POST['password1']) and !empty($_POST['password2']) and !empty($_POST['date']) and !empty($_POST['email']) and !empty($_POST['name']) and !empty($_POST['country'])) {
+
         if($_POST['password1'] === $_POST['password2']) {
             $connect =  mysqli_connect('localhost', 'mysql', 'mysql', 'registr');
             $login = $_POST['login'];
@@ -21,11 +22,11 @@
                     if(mb_strlen($pass) >= 6) {
                         if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-            $add_new_user = "INSERT INTO login(login, pasword, date, email, country, name, last_name, famaly, status) VALUES ('$login', '$pass', '$date', '$email', '$country', '$name', '$lastname', '$famaly', 'user')";
+            $add_new_user = "INSERT INTO login(login, pasword, date, email, country, name, last_name, famaly, id_status) VALUES ('$login', '$pass', '$date', '$email', '$country', '$name', '$lastname', '$famaly', '1')";
             mysqli_query($connect, $add_new_user) or die(mysqli_error($add_new_user));
 
             $id = mysqli_insert_id($connect);
-            $_SESSION['id'] = $id;
+            $_SESSION['id'] = (string) $id;
             $_SESSION['login'] = $login;
             $_SESSION['success'] = "Добро пожаловать!";
             $_SESSION['auth'] = true;

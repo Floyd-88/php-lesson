@@ -16,8 +16,6 @@ $person = mysqli_fetch_assoc($result);
 // }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,26 +34,28 @@ $person = mysqli_fetch_assoc($result);
     <p><b>Страна:</b> <span><?php echo $person['country'] ?></span></p>
 
     <?php
-    if( !empty($_SESSION['auth']) and $_SESSION['id'] === $id_user) { ?>
-    
+    if(!empty($_SESSION['auth']) and $_SESSION['id'] === $id_user) { ?>
+        
         <a href="account.php">Редактировать профиль</a> <br>
         <a href="changePassword.php">Сменить пароль</a> <br>
         <a href="delete_user.php">Удалить профиль</a> <br>
+
         <?php
         $id = $_SESSION['id'];
-        $admin = "SELECT status FROM login WHERE id='$id'";
-        $result_admin = mysqli_query($connect, $admin);
+        $admin = "SELECT id_status FROM login WHERE id='$id'";
+        $result_admin = mysqli_query($connect, $admin)  or die(mysqli_error($admin));
         $user_admin = mysqli_fetch_assoc($result_admin);
-        if($user_admin['status'] === 'admin') { ?>
+        if($user_admin['id_status'] === '2') { ?>
             <a href="admin.php">Перейти на панель администратора</a> <br>
        <?php }
-        
-         } ?>
+         } 
+         ?>
 
     
 </body>
 </html>
 
+<!-- Функция для определения возраста по дате рождения -->
 <?php
 function get_age( $birthday ){
 	$diff = date( 'Ymd' ) - date( 'Ymd', strtotime($birthday) );
