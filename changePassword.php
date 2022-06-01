@@ -19,7 +19,7 @@ if(!empty($old_password) and !empty($new_password_1) and !empty($new_password_2)
 
         $query_new_pass = "UPDATE login SET pasword='$newPasswordHash' WHERE id = '$id'";
         mysqli_query($connect, $query_new_pass) or die(mysqli_error($query_new_pass));
-        header('Location:profile.php');
+        header('Location:profile.php?id=$id');
         } else {
             echo "Новые пароли не соответсвуют друг другу";
         }
@@ -39,6 +39,7 @@ if(!empty($old_password) and !empty($new_password_1) and !empty($new_password_2)
     <title>Password</title>
 </head>
 <body>
+<?php include 'header.php' ?>
     <form action="" method="POST">
         <h3>Сменить пароль:</h3>
         <input type="password" name="old_password" placeholder="введите старый пароль"> <br>
@@ -46,7 +47,7 @@ if(!empty($old_password) and !empty($new_password_1) and !empty($new_password_2)
         <input type="password" name="new_password_2" placeholder="повторите новый пароль"><br>
         <input type="submit">
     </form> <br>
-    <a href="profile.php">Назад в профиль</a>
+    <a href="profile.php?id=<?= $id ?>">Назад в профиль</a>
 </body>
 </html>
 

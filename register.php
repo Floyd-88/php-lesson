@@ -21,13 +21,13 @@
                     if(mb_strlen($pass) >= 6) {
                         if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-            $add_new_user = "INSERT INTO login(login, pasword, date, email, country, name, last_name, famaly) VALUES ('$login', '$pass', '$date', '$email', '$country', '$name', '$lastname', '$famaly')";
+            $add_new_user = "INSERT INTO login(login, pasword, date, email, country, name, last_name, famaly, status) VALUES ('$login', '$pass', '$date', '$email', '$country', '$name', '$lastname', '$famaly', 'user')";
             mysqli_query($connect, $add_new_user) or die(mysqli_error($add_new_user));
 
             $id = mysqli_insert_id($connect);
             $_SESSION['id'] = $id;
             $_SESSION['login'] = $login;
-            $_SESSION['success'] = "Добро пожаловть";
+            $_SESSION['success'] = "Добро пожаловать!";
             $_SESSION['auth'] = true;
             header('Location: index.php');
                         } else {
@@ -64,7 +64,7 @@
     <title>Document</title>
 </head>
 <body>
-
+<?php include 'header.php'; ?>
 <!-- Зарегистрируйте нового пользователя и авторизуйтесь под ним. Убедитесь, что все работает, как надо -->
 
 <!-- Внесите изменения в регистрацию с учетом хеширования, зарегистрируйте пару новых пользователей, убедитесь, что в базу данных они добавились с хешированными паролями. -->
@@ -97,6 +97,8 @@
 
 
         <input type="submit">
-    </form>
+    </form> <br> <br>
+
+    <a href="index.php">На главную страницу</a>
 </body>
 </html>

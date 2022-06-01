@@ -15,7 +15,7 @@ if(password_verify($pass, $hash)) {
     $delete_user = "DELETE FROM login WHERE id='$id'";
     mysqli_query($connect, $delete_user) or die(mysqli_error($delete_user));
     session_destroy(); 
-    header('Location:index.php');
+    header('Location:index.php?id=$id');
     } else {
     echo "Пароль введен неверно!!!";
     }
@@ -31,12 +31,13 @@ if(password_verify($pass, $hash)) {
     <title>Delete_user</title>
 </head>
 <body>
+<?php include 'header.php' ?>
     <form action="" method="POST">
         <h3>Удалить профиль:</h3>
         <input type="password" name="password" placeholder="введите пароль"> <br>
         <input type="submit">
     </form> <br>
-    <a href="profile.php">Назад в профиль</a>
+    <a href="profile.php?id=<?= $id ?>">Назад в профиль</a>
 </body>
 </html>
 

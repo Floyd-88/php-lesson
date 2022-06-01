@@ -15,8 +15,9 @@ session_start();
             
             $_SESSION['id'] = $user['id'];
             $_SESSION['login'] = $user['login'];
-            $_SESSION['success'] = "Добро пожаловть";
+            $_SESSION['success'] = "Добро пожаловать!";
             $_SESSION['auth'] = true;
+            $_SESSION['status'] =  $user['status'];
                 } else {
                 echo "Введенный логин или пароль не верны!";
                 session_destroy();
@@ -37,7 +38,9 @@ session_start();
     <title>Document</title>
 </head>
 <body>
-
+<?php
+include 'header.php';
+?>
 <!-- Сделайте так, чтобы, если пользователь прошел авторизацию - выводилось сообщение об этом, а если не прошел - то сообщение о том, что введенный логин или пароль вбиты не правильно. -->
 
     <form action="" method="POST">

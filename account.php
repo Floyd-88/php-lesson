@@ -18,7 +18,7 @@ $famaly = $_POST['famaly'];
 
 if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
     if(!empty($date) and !empty($email) and !empty($name)) {
-     header('Location: profile.php');
+     header("Location: profile.php?id=$id");
 $query_update = "UPDATE login SET date='$date', email='$email', country='$country', name='$name', last_name='$lastname', famaly='$famaly' WHERE id=$id";
 mysqli_query($connect, $query_update) or die(mysqli_error($query_update));
         } else {
@@ -45,6 +45,7 @@ $user = mysqli_fetch_assoc($result);
     <title>Document</title>
 </head>
 <body>
+<?php include 'header.php' ?>
 <form action="" method="POST">
     <h3>Отреактировать свои данные:</h3>
         <?= $all_input ?>
@@ -68,6 +69,6 @@ $user = mysqli_fetch_assoc($result);
         <input type="submit" name="submit">
     </from> <br><br>
 
-    <a href="profile.php">Назад в профиль</a>
+    <a href="profile.php?id=<?= $id ?>">Назад в профиль</a>
 </body>
 </html>
